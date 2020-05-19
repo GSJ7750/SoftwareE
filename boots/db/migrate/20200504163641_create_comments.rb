@@ -7,7 +7,7 @@ class CreateComments < ActiveRecord::Migration
 
       t.timestamps null: false
 
-      change_column :commenter, :body, null:false
+        #change_column :commenter, :body, null:false
     end
   end
 end
