@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   def show
+
   end
 
   def create
@@ -17,6 +18,6 @@ class CommentsController < ApplicationController
 
   private
   def comment_params
-    params.require(:comment).permit(:commenter, :body)
+    params.require(:comment).permit(:commenter, :body, :password)
   end
 end

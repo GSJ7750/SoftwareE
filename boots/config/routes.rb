@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+  get 'login' => 'sessions#new'
+  post 'login' => 'sessions#create'
+  delete 'logout' => 'sessions#destroy'
+  get 'sessions/new'
+
+  get 'users/new'
+
+  get 'users/create'
+
+  get 'users/destroy'
+
+  resources :users
   get 'comments/show'
 
   get 'comments/create'

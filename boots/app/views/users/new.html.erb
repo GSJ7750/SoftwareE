@@ -1,7 +1,8 @@
-
 <head>
   <%= stylesheet_link_tag '/css/postindex.css' %>
+  <%= stylesheet_link_tag '/css/form.css' %>
 </head>
+
 <body>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <a class="navbar-brand" href="/">Cover page</a>
@@ -40,5 +41,49 @@
     </form>
   </div>
 </nav>
-<%= render 'form' %>
-</body>
+<%= form_for @user do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@user.errors.count, "error") %> prohibited
+        this article from being saved:
+      </h2>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-all">
+    <div class="form-inputs" >
+      <p>
+        <%= f.label :아이디 %><br>
+        <%= f.text_field :userid, :size=>"20" %>
+      </p>
+      <p>
+        <%= f.label :비밀번호 %><br>
+        <%= f.password_field :password, :size=>"20" %>
+      </p>
+      <p>
+        <%= f.label :이름 %><br>
+        <%= f.text_field :name, :size=>"20" %>
+      </p>
+      <p>
+        <%= f.label :이메일 %><br>
+        <%= f.email_field :email, :size=>"20" %>
+      </p>
+
+    </div>
+
+    <div class="form-actions">
+      <p>
+        <%= f.submit '등록' %>
+      </p>
+    </div>
+  </div>
+
+<% end %>
+<%= @users.each do |u| %>
+
+<% end %>

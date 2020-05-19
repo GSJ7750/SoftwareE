@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200504163641) do
+ActiveRecord::Schema.define(version: 20200519115426) do
 
   create_table "comments", force: :cascade do |t|
     t.string   "commenter"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20200504163641) do
     t.integer  "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "password"
   end
 
   add_index "comments", ["post_id"], name: "index_comments_on_post_id"
@@ -28,6 +29,16 @@ ActiveRecord::Schema.define(version: 20200504163641) do
     t.text     "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "writer"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "userid"
+    t.string   "password_digest"
+    t.string   "name"
+    t.string   "email"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
 end

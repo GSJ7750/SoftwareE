@@ -1,0 +1,66 @@
+.show-post{
+    margin-top: 7rem;
+    text-align: left;
+    display: inline-block;
+    margin-bottom: 15rem;
+    width: 100%;
+}
+
+.show-title{
+    padding-bottom: 5rem;
+    border-bottom: #999999 solid;
+}
+
+.show-writer{
+    text-align: right;
+    margin-right: 2rem;
+    margin-top: 1rem;
+}
+
+.show-content{
+    padding-left: 3rem;
+    padding-top: 5rem;
+}
+
+.show-comments{
+    text-align: left;
+    display: inline-block;
+}
+.show-comment{
+
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    border-top: #999999 solid 1px;
+    border-bottom: #999999 solid 1px;
+}
+.show-destroy{
+    text-align: right;
+}
+
+.show-actions{
+    text-align: right;
+}
+
+.show-comments-write{
+    margin-top: 5rem;
+}
+
+.show-all{
+    display: inline-block;
+    border: #333333 solid;
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+
+.show-edit{
+    text-align: end;
+}
+
+body{
+    text-align: center;
+}
+
+h1{
+    text-align: center;
+}

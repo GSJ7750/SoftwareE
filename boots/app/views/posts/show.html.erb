@@ -1,64 +1,131 @@
 <head>
   <%= stylesheet_link_tag '/css/postindex.css' %>
+  <%= stylesheet_link_tag '/css/postshow.css' %>
 </head>
 <body>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#">Fixed navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav mr-auto">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="/">Cover page</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/posts">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <% if user_signed_in? %>
         <li class="nav-item active">
-          <a class="nav-link" href="/posts">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/posts/new">글쓰기</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+        <li class="nav-item active">
+          <a class="nav-link" href="/logout" data-method="delete">로그아웃</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      <% else %>
+        <li class="nav-item active">
+          <a class="nav-link" href="/login">로그인</a>
         </li>
-      </ul>
-      <form class="form-inline mt-2 mt-md-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
+        <li class="nav-item active">
+          <a class="nav-link" href="/users/new">회원가입</a>
+        </li>
+      <% end %>
+    </ul>
+    <form class="form-inline mt-2 mt-md-0">
+      <!--<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>!-->
+      <div class="hello">
+        <% if user_signed_in? %>
+          <strong>반갑습니다, <%= current_user.userid %>님</strong>
+        <% end %>
+      </div>
+    </form>
+  </div>
+</nav>
+
+
+  <div class="show-all">
+    <div class="show-post">
+      <div class="show-title">
+        <h1><%= @post.title %></h1>
+      </div>
+      <div class ="show-writer">
+        <p><%= @post.writer %></p>
+      </div>
+      <div class="show-content">
+        <p><%= @post.content.html_safe %></p>
+      </div>
     </div>
-  </nav>
+    <% if user_signed_in? %>
+      <% if current_user.userid == @post.writer%>
+        <div class="show-edit">
+          <p><%= link_to '수정', edit_post_path %> <%= link_to '삭제', post_path, method: :delete, data:{confirm:"정말 삭제하시겠습니까?"} %> <%= link_to '목록', posts_path %></p>
+        </div>
+      <%end %>
 
-  <%= @post.title %><br>
-  <%= @post.content %>
+    <% else %>
+      <div class="show-edit">
+        <%= link_to '목록', posts_path %>
+      </div>
+    <% end %>
 
-  <h2>Comment</h2>
+
+    <br>
+    <div class="show-comments">
+      <h3>Comment</h3>
+
+        <% @post.comments.each do |comment| %>
+          <% if comment.commenter.nil? %>
+          <% else %>
+          <div class="show-comment"><!-- 댓글을 실질적으로 보여주는 코드 !-->
+            <p>
+              <%= comment.commenter %>
+              <%= comment.password %>
+            </p>
+            <p>
+              <%= comment.body %>
+              <% if user_signed_in? %>
+                <% if current_user.userid == comment.commenter %>
+                  <div class="show-destroy">
+                    <!--<%= link_to '   삭제', [comment.post, comment], method: :delete, data:{confirm:"정말로 삭제하시겠습니까?"} %>!-->
+                    <a href="/posts/<%= @post.id %>/comments/<%= comment.id %> " data-method="delete" data-confirm="정말로 삭제하시겠습니까?" >삭제</a>
+                  </div>
+                <% end %>
+              <% end %>
+
+            </p>
+            </div>
+          <% end %>
+        <% end %>
 
 
-  <%= form_for ([@post, @post.comments.build]) do |f|%>
-    <p>
-      <%= f.label :commenter %><br>
-      <%= f.text_field :commenter %>
-    </p>
-    <p>
-      <%= f.label :body %><br>
-      <%= f.text_area :body %>
-    </p>
-    <p>
-      <%= f.submit '등록' %>
-    </p>
-  <% end %>
 
-  <%= @post.comments.each do |comment| %>
-      <p>
-        ---------------------------------
-      </p>
-      <p>
-        <%= comment.commenter %>
-      </p>
-      <p>
-        <%= comment.body %>
-      </p>
-      <p>
-        <%= link_to 'destroy', [comment.post, comment], method: :delete, data:{confirm:"정말로 삭제하시겠습니까?"} %>
-      </p>
 
-  <% end %>
+      <%= form_for ([@post, @post.comments.build]) do |f|%>
+        <div class="show-comments-write">
+          <% if user_signed_in? %>
+            <p>
+              <%= f.label :commenter %>
+              <%= f.hidden_field :commenter, :size=>"10", value:current_user.userid %>
+            </p>
+          <% else %>
+            <p>
+              <%= f.label :commenter %>
+              <%= f.text_field :commenter, :size=>"10" %>
+              <%= f.label :password %>
+              <%= f.password_field :password, :size=>"10" %>
+            </p>
+
+          <% end %>
+          <p>
+            <%= f.label :body %><br>
+            <%= f.text_area :body, :size=>"100x3" %>
+            <div class ="show-actions">
+          <p>
+            <%= f.submit '등록' %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+
 </body>

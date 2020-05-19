@@ -6,6 +6,8 @@ class CreateComments < ActiveRecord::Migration
       t.references :post, index: true, foreign_key: true
 
       t.timestamps null: false
+
+      change_column :commenter, :body, null:false
     end
   end
 end

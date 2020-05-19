@@ -1,3 +1,6 @@
+<head>
+  <%= stylesheet_link_tag '/css/form.css' %>
+</head>
 <%= form_for @post do |f| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
@@ -12,16 +15,28 @@
       </ul>
     </div>
   <% end %>
-  <p>
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </p>
-  <p>
-    <%= f.label :content %><br>
-    <%= f.text_area :content %>
-  </p>
+  <div class="form-all">
+    <div class="form-inputs" >
+      <p>
+        <%= f.hidden_field :writer, :size=>"20", value: current_user.userid, readonly:true%>
+      </p>
+      <p>
+        <%= f.label :title %><br>
+        <%= f.text_field :title, :size=>"100" %>
+      </p>
+      <p>
+        <%= f.label :content %><br>
+        <%= tinymce :language => "ko_KR" %>
+        <%= f.text_area :content, :size=>"100x10", class: "form-control tinymce" %>
+      </p>
+    </div>
 
-  <p>
-    <%= f.submit '등록' %>
-  </p>
+    <div class="form-actions">
+      <p>
+        <%= f.submit '등록' %>
+      </p>
+    </div>
+  </div>
+
+
 <% end %>
