@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  post '/tinymce_assets' => 'tinymce_assets#create'
+
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'

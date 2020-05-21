@@ -34,8 +34,8 @@ gem 'tinymce-rails-langs'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 #
-#gem 'tinymce-rails-imageupload'
-#gem 'carrierwave'
+gem 'tinymce-rails-imageupload'
+gem 'carrierwave'
 
 
 group :development, :test do

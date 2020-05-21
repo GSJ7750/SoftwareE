@@ -1,6 +1,7 @@
 <head>
   <%= stylesheet_link_tag '/css/postindex.css' %>
   <%= stylesheet_link_tag '/css/postshow.css' %>
+
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -41,6 +42,14 @@
   </div>
 </nav>
 
+<div id="flash">
+  <div class="notice">
+    <%= flash[:notice] %>
+  </div>
+  <div class="alert">
+    <%= flash[:alert] %>
+  </div>
+</div>
 
   <div class="show-all">
     <div class="show-post">
@@ -51,7 +60,8 @@
         <p><%= @post.writer %></p>
       </div>
       <div class="show-content">
-        <p><%= @post.content.html_safe %></p>
+        <!--<p><%= @post.content.html_safe %></p>!-->
+        <p><%= content_tag(:div, @post.content.html_safe, :class => "panel-body") %></p>
       </div>
     </div>
     <% if user_signed_in? %>
@@ -78,7 +88,6 @@
           <div class="show-comment"><!-- 댓글을 실질적으로 보여주는 코드 !-->
             <p>
               <%= comment.commenter %>
-              <%= comment.password %>
             </p>
             <p>
               <%= comment.body %>
@@ -89,6 +98,47 @@
                     <a href="/posts/<%= @post.id %>/comments/<%= comment.id %> " data-method="delete" data-confirm="정말로 삭제하시겠습니까?" >삭제</a>
                   </div>
                 <% end %>
+              <% else %>
+                <div class="sign-out-comment-destroy">
+
+                  <a href="#" onclick="show(); return false"id="rmbutton">삭제</a>
+                  <script type="text/javascript" charset="utf-8">
+                    function show(){
+                        document.all.demo.style.display="inline";
+                        document.all.rmbutton.style.display="none";
+                    }
+                    function none(){
+                        document.all.demo.style.display="none"
+                        document.all.rmbutton.style.display="inline";
+                    }
+                    function get_pw(){
+                        var c_pw = document.getElementById("comment_pw").value();
+                        return c_pw
+                    }
+                    function compare_pw(){
+                        if(get_pw() == comment.password){
+                            return true;
+                        }
+                        else{
+                            return false;
+                        }
+                    }
+                  </script>
+
+                  <div id= "demo" style="display: none ">
+                    <%= form_tag ([@post, comment]), remote: true,  method: :delete do %>
+                      <%= label_tag :비밀번호 %>
+                      <%= text_field_tag 'comment_pw', ''%>
+                      <input value="삭제" type="submit" id="rm_comment">
+                      <a href="#" onclick="none(); return false;">취소</a>
+                    <% end %>
+
+                    <!--<a href="/posts/<%= @post.id %>/comments/<%= comment.id %> " data-method="delete" data-confirm="정말로 삭제하시겠습니까?" >삭제</a>!-->
+
+                  </div>
+
+
+                </div>
               <% end %>
 
             </p>

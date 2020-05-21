@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  protect_from_forgery with: :exception
+  protect_from_forgery with: :null_session
   def show
 
   end
@@ -12,9 +14,27 @@ class CommentsController < ApplicationController
   def destroy
     @post = Post.find(params[:post_id])
     @comment = @post.comments.find(params[:id])
-    @comment.destroy
-    redirect_to @post
+    if user_signed_in?
+      @comment.destroy
+    else
+      @comment_pw = params[:comment_pw]
+      if @comment.password == @comment_pw
+        @comment.destroy
+        message = "댓글이 삭제되었습니다."
+        redirect_to @post, :notice => message
+
+      else
+        message = "비밀번호가 틀렸습니다."
+        redirect_to @post, :alert => message
+
+      end
+
+
+
+
+    end
   end
+
 
   private
   def comment_params
