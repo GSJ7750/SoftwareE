@@ -30,12 +30,13 @@ gem 'bcrypt', '~> 3.1.7'
 # gem 'unicorn'
 gem 'tinymce-rails'
 gem 'tinymce-rails-langs'
+gem 'tinymce-rails-imageupload', '~> 3.5.8.6'
+gem 'carrierwave'
 #
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 #
-gem 'tinymce-rails-imageupload'
-gem 'carrierwave'
+
 
 
 group :development, :test do
