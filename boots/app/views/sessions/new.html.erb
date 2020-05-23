@@ -1,5 +1,6 @@
 <head>
   <%= stylesheet_link_tag '/css/postindex.css' %>
+  <%= stylesheet_link_tag '/css/session.css' %>
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -39,10 +40,16 @@
     </form>
   </div>
 </nav>
-<%= form_tag '/login' do %>
-  아이디
-  <input type="userid" name="userid"><br>
-  비밀번호
-  <input type="password" name="password"><br>
-  <input type="submit" value="로그인">
-<% end %>
+<div class="session-login">
+  <%= form_tag '/login' do %>
+    <p>
+      <input type="userid" name="userid" placeholder="아이디"><br>
+    </p>
+    <p>
+      <input type="password" name="password" placeholder="비밀번호"><br>
+    </p>
+    <p>
+      <input type="submit" value="로그인" class="login-button">
+    </p>
+  <% end %>
+</div>

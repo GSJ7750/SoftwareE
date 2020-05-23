@@ -7,18 +7,23 @@
       <div class="inner">
         <h3 class="masthead-brand">Cover</h3>
         <nav class="nav nav-masthead justify-content-center">
-          <a class="nav-link active" href="/">Home</a>
-          <a class="nav-link" href="users/new">회원가입</a>
-          <a class="nav-link" href="#">Contact</a>
+          <a class="nav-link active" href="/">Main page</a>
+          <% if user_signed_in? %>
+            <a class="nav-link" href="/logout" data-method="delete">로그아웃</a>
+            <a class="nav-link">반갑습니다. <%= current_user.userid %>님</a>
+          <% else %>
+            <a class="nav-link" href="users/new">회원가입</a>
+            <a class="nav-link" href="/login">로그인</a>
+          <% end %>
         </nav>
       </div>
     </header>
 
     <main role="main" class="inner cover">
-      <h1 class="cover-heading">Cover your page.</h1>
-      <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+      <h1 class="cover-heading">Dongguk Post</h1>
+      <p class="lead"></p>
       <p class="lead">
-        <a href="/posts" class="btn btn-lg btn-secondary">Learn more</a>
+        <a href="/posts" class="btn btn-lg btn-secondary">들어가기</a>
 
       </p>
     </main>

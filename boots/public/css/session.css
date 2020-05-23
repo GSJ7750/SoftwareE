@@ -1,0 +1,19 @@
+.session-login{
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10%;
+    border: 1px solid lightgreen;
+    padding: 5rem;
+    border-radius: 15px;
+    box-shadow: 2px 2px #999999;
+
+}
+
+.session-text{
+    text-align: left;
+}
+
+body{
+    text-align: center;
+}
